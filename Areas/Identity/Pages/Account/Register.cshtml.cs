@@ -80,11 +80,9 @@ namespace User_Empresa.Areas.Identity.Pages.Account
             [StringLength(255, ErrorMessage = "O sobrenome deve ter no máximo 255 caracteres!")]
             [Display(Name = "Sobrenome")]
             public string SobreNome { get; set; }
-
-            [Required(ErrorMessage = "Insira seu RA!")]
             public int RA { get; set; }
-
             public int Telefone { get; set; }
+            public int CNPJ { get; set; }
 
 
             /// <summary>
@@ -93,7 +91,7 @@ namespace User_Empresa.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             [EmailAddress]
-            [Display(Name = "Email Aluno")]
+            [Display(Name = "Email")]
             public string Email { get; set; }
 
             /// <summary>
@@ -136,7 +134,8 @@ namespace User_Empresa.Areas.Identity.Pages.Account
                 user.RA = Input.RA;
                 user.Telefone = Input.Telefone;
                 user.Email = Input.Email;
-                user.Password = Input.Password; 
+                user.Password = Input.Password;
+                user.CNPJ = Input.CNPJ;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

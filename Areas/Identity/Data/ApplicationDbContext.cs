@@ -30,7 +30,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             builder.Property(u => u.Sobrenome).HasMaxLength(255);
             builder.Property(u => u.Telefone).HasMaxLength(11);    
             builder.Property(u => u.Password).HasMaxLength(16);       
-            builder.Property(u => u.RA).HasMaxLength(8);    
+            builder.Property(u => u.RA).HasMaxLength(8);
+            builder.Property(u => u.CNPJ);
         }
     }
 }

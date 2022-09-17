@@ -16,14 +16,15 @@ public class ApplicationUser : IdentityUser
     [Required]
     [EmailAddress(ErrorMessage = "Email Inválido!")]
     public string Email { get; set; }
-    
-    [Required(ErrorMessage = "Insira seu RA!")]
     public int RA { get; set; }
 
     [Required]
     [DataType(DataType.Password)]
     public string Password { get; set; }
     public int Telefone { get; set; }
+    public int CNPJ { get; set; }
 
 }
+
+
 
