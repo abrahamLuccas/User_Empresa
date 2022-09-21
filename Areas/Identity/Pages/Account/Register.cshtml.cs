@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using User_Empresa.Areas.Identity.Data;
+using User_Empresa.Core;
 
 namespace User_Empresa.Areas.Identity.Pages.Account
 {
@@ -84,6 +85,9 @@ namespace User_Empresa.Areas.Identity.Pages.Account
             public int Telefone { get; set; }
             public int CNPJ { get; set; }
 
+            [Display(Name = "Empresa/Aluno")]
+            public string Tipo { get; set; }
+
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -137,12 +141,22 @@ namespace User_Empresa.Areas.Identity.Pages.Account
                 user.Password = Input.Password;
                 user.CNPJ = Input.CNPJ;
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                var userName = $"{Input.Nome} {Input.SobreNome}";
+                await _userStore.SetUserNameAsync(user, userName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
+                    if(Input.Tipo == "Empresa")
+                    {
+                        await _userManager.AddToRoleAsync(user, Constants.Roles.Empresa);
+                    }
+                    else if (Input.Tipo == "Aluno")
+                    {
+                        await _userManager.AddToRoleAsync(user, Constants.Roles.Aluno);
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
