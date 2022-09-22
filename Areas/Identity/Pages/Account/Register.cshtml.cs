@@ -85,6 +85,7 @@ namespace User_Empresa.Areas.Identity.Pages.Account
             public int Telefone { get; set; }
             public int CNPJ { get; set; }
 
+            [Required]
             [Display(Name = "Empresa/Aluno")]
             public string Tipo { get; set; }
 
@@ -141,7 +142,7 @@ namespace User_Empresa.Areas.Identity.Pages.Account
                 user.Password = Input.Password;
                 user.CNPJ = Input.CNPJ;
 
-                var userName = $"{Input.Nome} {Input.SobreNome}";
+                var userName = $"{Input.Nome}_{Input.SobreNome}";
                 await _userStore.SetUserNameAsync(user, userName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
